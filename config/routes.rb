@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :messages
+
   post 'center/service'
 
   # The priority is based upon order of creation: first created -> highest priority.
