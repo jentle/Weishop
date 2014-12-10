@@ -29,8 +29,12 @@ gem 'spring',        group: :development
 gem 'therubyracer', :platforms => :ruby
 
 gem 'mysql2', '0.3.17'
+
+# xml parser
+gem 'actionpack-xml_parser'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+gem 'rspec', '3.1.0'
 
 # Use unicorn as the app server
 # gem 'unicorn'

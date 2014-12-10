@@ -1,10 +1,17 @@
 class MessagesController < ApplicationController
   before_action :set_message, only: [:show, :edit, :update, :destroy]
-
+  before_filter :check_token , only: []
+  skip_before_filter :verify_authenticity_token, :only => [:create]
   helper MessagesHelper
+  
+  require 'service/core_service'
+  require 'service/text_message_service'
+  require 'service/image_message_service'
+ 
   # GET /messages
   # GET /messages.json
   def index
+    #render :text=> params[:echostr]
     @messages = Message.all
   end
 
@@ -25,29 +32,32 @@ class MessagesController < ApplicationController
   # POST /messages
   # POST /messages.json
   def create
-    request_params = parse_request(message_params)
-    #@message = Message.new(request_params)
-    @message = Message.new(message_params)
+    request_params = parse_request(params[:xml])
+    #follower = Follower.find_by_name(request_params[:to_user_name])
+    #@message = Follower.create_message(request_params)
+    @message = Message.new(request_params)
+    service_name = (@message.msg_type+"Service")
+    service =  service_name.classify.constantize.new(@message)
+    
+    service.save_message
+    @response = service.reply
 
     respond_to do |format|
-      if @message.save
-        format.html { redirect_to messages_url, notice: 'Message was successfully created.' }
-        format.json { render :show, status: :created, location: @message }
-      else
-        format.html { render :new }
-        format.json { render json: @message.errors, status: :unprocessable_entity }
-      end
+      format.xml { render underscore( @response.msg_type) }
     end
+   
   end
-
+  
   # Should Be Moved To MessageHelper Later
   def parse_request request
     params = Hash.new
     request.each {|u,v|
-      if u.to_s.eql? "MsgType"
-        v = v.to_s.classify + "Message"
+      if !u.to_s.eql? "URL"
+         if u.to_s.eql? "MsgType"
+            v = v.to_s.classify + "Message"
+         end
+         params[underscore(u.to_s)] = v
       end
-      params[underscore(u.to_s)] = v
     }
    params
   end
@@ -89,7 +99,11 @@ class MessagesController < ApplicationController
     def set_message
       @message = Message.find(params[:id])
     end
-
+    
+    def check_token
+      array = ["gujiang", params[:timestamp], params[:nonce]].sort
+      render :text => "Forbidden", :status => 403 if params[:signature] != Digest::SHA1.hexdigest(array.join)
+    end
     # Never trust parameters from the scary internet, only allow the white list through.
     def message_params
       params.require(:message).permit(:to_user_name, :create_time, :msg_type, :content, :msg_id, :media_id, :pic_url, :format, :thumb_media_id)

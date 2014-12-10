@@ -3,6 +3,7 @@
 <table>
   <thead>
     <tr>
+      <th>From user name</th>
       <th>To user name</th>
       <th>Create time</th>
       <th>Msg type</th>
@@ -19,6 +20,7 @@
   <tbody>
     <% @messages.each do |message| %>
       <tr>
+		<td><%= message.from_user_name %></td>
         <td><%= message.to_user_name %></td>
         <td><%= message.create_time %></td>
         <td><%= message.msg_type %></td>

@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141209001807) do
+ActiveRecord::Schema.define(version: 20141210045947) do
+
+  create_table "followers", force: true do |t|
+    t.string   "name"
+    t.integer  "public_account_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "messages", force: true do |t|
     t.string   "from_user_name"
@@ -19,11 +26,21 @@ ActiveRecord::Schema.define(version: 20141209001807) do
     t.integer  "create_time"
     t.string   "msg_type"
     t.text     "content"
-    t.integer  "msg_id",         limit: 8
+    t.integer  "msg_id",            limit: 8
     t.string   "media_id"
     t.string   "pic_url"
     t.string   "format"
     t.string   "thumb_media_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "follower_id"
+    t.integer  "public_account_id"
+    t.string   "event"
+  end
+
+  create_table "public_accounts", force: true do |t|
+    t.string   "name"
+    t.string   "access_token"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
