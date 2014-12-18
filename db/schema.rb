@@ -11,13 +11,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141210045947) do
+ActiveRecord::Schema.define(version: 20141212184536) do
+
+  create_table "article_items", force: true do |t|
+    t.text     "title"
+    t.text     "description"
+    t.string   "pic_url"
+    t.string   "url"
+    t.integer  "news_message_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "followers", force: true do |t|
-    t.string   "name"
+    t.integer  "subscribe"
+    t.string   "openid"
+    t.string   "nickname"
+    t.integer  "sex"
+    t.string   "city"
+    t.string   "country"
+    t.string   "province"
+    t.string   "language"
+    t.text     "headimgurl"
+    t.integer  "subscribe_time"
+    t.string   "unionid"
     t.integer  "public_account_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "remark"
   end
 
   create_table "messages", force: true do |t|
@@ -28,7 +49,7 @@ ActiveRecord::Schema.define(version: 20141210045947) do
     t.text     "content"
     t.integer  "msg_id",            limit: 8
     t.string   "media_id"
-    t.string   "pic_url"
+    t.text     "pic_url"
     t.string   "format"
     t.string   "thumb_media_id"
     t.datetime "created_at"
@@ -36,13 +57,22 @@ ActiveRecord::Schema.define(version: 20141210045947) do
     t.integer  "follower_id"
     t.integer  "public_account_id"
     t.string   "event"
+    t.float    "latitude",          limit: 24
+    t.float    "longitude",         limit: 24
+    t.float    "precision",         limit: 24
+    t.string   "event_key"
+    t.text     "recognition"
   end
 
   create_table "public_accounts", force: true do |t|
     t.string   "name"
-    t.string   "access_token"
+    t.text     "access_token"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "app_id"
+    t.string   "app_secret"
+    t.integer  "expired_at"
+    t.string   "official_name"
   end
 
 end

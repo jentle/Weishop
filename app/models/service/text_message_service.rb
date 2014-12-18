@@ -2,10 +2,11 @@ class TextMessageService < CoreService
   require 'service/core_service'
   
 
-  
-  def reply
-    response = self.construct_text("这是一条文本")
-    self.save_response(response)
-    response
+  def construct
+    status = analysis @message.content
+    auto_reply status
   end
+  
+  
+  
 end

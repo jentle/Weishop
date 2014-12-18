@@ -1,0 +1,17 @@
+<xml>
+    <ToUserName><![CDATA[<%= @response.to_user_name%>]]></ToUserName>
+    <FromUserName><![CDATA[<%= @response.from_user_name %>]]></FromUserName>
+    <CreateTime><%= @response.create_time %></CreateTime>
+	<MsgType><![CDATA[news]]></MsgType>
+	<ArticleCount><%= @response.article_items.count %></ArticleCount>
+	<Articles>
+		<%  @response.article_items.each do |article_item|%>
+		<item>
+			<Title><![CDATA[<%= article_item.title%>]]></Title> 
+			<Description><![CDATA[<%= article_item.description%>]]></Description>
+			<PicUrl><![CDATA[<%= article_item.pic_url%>]]></PicUrl>
+			<Url><![CDATA[<%= article_item.url %>]]></Url>
+		</item>
+		<% end %>
+	</Articles>
+</xml> 

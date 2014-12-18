@@ -1,0 +1,9 @@
+<xml>
+    <ToUserName><![CDATA[<%= @response.to_user_name%>]]></ToUserName>
+    <FromUserName><![CDATA[<%= @response.from_user_name %>]]></FromUserName>
+    <CreateTime><%= @response.create_time %></CreateTime>
+    <MsgType><![CDATA[voice]]></MsgType>
+	<Voice>
+    	<MediaId><![CDATA[<%= @response.media_id %>]]></Content>
+	</Voice>
+</xml>

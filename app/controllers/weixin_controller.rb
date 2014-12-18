@@ -1,28 +1,33 @@
 class WeixinController < ApplicationController
-  before_filter :check_token , only: [:index]
+  before_filter :check_token , only: [:index,:create]
   skip_before_filter :verify_authenticity_token, :only => [:create]
   
   require 'service/core_service'
   require 'service/text_message_service'
   require 'service/image_message_service'
- 
+  require 'service/event_message_service'
+  require 'service/voice_message_service'
+  
   def index
     render :text => params[:echostr]
   end
   
   def create
-    request_params = parse_request(params[:xml])
-    #follower = Follower.find_by_name(request_params[:to_user_name])
-    #@message = Follower.create_message(request_params)
+    request_params = parse_request(xml_params)
+  
     @message = Message.new(request_params)
+    # Dynamically Create Service According Message Type, Easy for Extension
     service_name = (@message.msg_type+"Service")
-    service =  service_name.classify.constantize.new(@message)
-    
-    service.save_message
+    service =  service_name.classify.constantize.new(@message)  
+    # Get Respond Message
     @response = service.reply
-
+    # Reply Message To User
     respond_to do |format|
-      format.xml { render underscore( @response.msg_type) }
+      if @response.msg_type
+        format.xml { render underscore( @response.msg_type) }
+      else
+        format.xml {render :text => '',:status => 403}
+      end 
     end
    
   end
@@ -53,5 +58,9 @@ class WeixinController < ApplicationController
   def check_token
     array = ["gujiang", params[:timestamp], params[:nonce]].sort
     render :text => "Forbidden", :status => 403 if params[:signature] != Digest::SHA1.hexdigest(array.join)
+  end
+  
+  def xml_params
+    params.require(:xml).permit(:URL, :ToUserName, :FromUserName, :CreateTime, :MsgType, :Content, :MsgId, :MediaId, :PicUrl, :Format, :ThumbMediaId,:Event, :Latitude,:Longtitude,:Precision,:EventKey,:Recognition)
   end
 end

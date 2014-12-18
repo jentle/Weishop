@@ -8,11 +8,6 @@
       <th>Create time</th>
       <th>Msg type</th>
       <th>Content</th>
-      <th>Msg</th>
-      <th>Media</th>
-      <th>Pic url</th>
-      <th>Format</th>
-      <th>Thumb media</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -20,18 +15,21 @@
   <tbody>
     <% @messages.each do |message| %>
       <tr>
-		<td><%= message.from_user_name %></td>
-        <td><%= message.to_user_name %></td>
-        <td><%= message.create_time %></td>
+		<% if PublicAccount.find_by_name(message.to_user_name) %>
+		<td><%= message.follower.nickname%></td>
+		<td><%= message.public_account.official_name %></td>
+		<% else%>
+		<td><%= message.public_account.official_name %></td>
+		<td><%= message.follower.nickname %></td>
+		<% end %>
+        <td><%= Time.at(message.create_time).strftime("%B %e, %Y at %H:%M:%S") %></td>
         <td><%= message.msg_type %></td>
+		<% if message.msg_type.eql? "VoiceMessage"%>
+		<td><%= message.recognition %></td>
+		<% else %>
         <td><%= message.content %></td>
-        <td><%= message.msg_id %></td>
-        <td><%= message.media_id %></td>
-        <td><%= message.pic_url %></td>
-        <td><%= message.format %></td>
-        <td><%= message.thumb_media_id %></td>
+		<% end %>
         <td><%= link_to 'Show', message_path(message) %></td>
-        <td><%= link_to 'Edit', edit_message_path(message) %></td>
         <td><%= link_to 'Destroy', message_path(message), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
@@ -40,4 +38,3 @@
 
 <br>
 
-<%= link_to 'New Message', new_message_path %>

@@ -36,6 +36,8 @@ gem 'actionpack-xml_parser'
 # gem 'bcrypt', '~> 3.1.7'
 gem 'rspec', '3.1.0'
 
+# Running Background Jobs
+gem "resque", "~> 2.0.0.pre.1", github: "resque/resque"
 # Use unicorn as the app server
 # gem 'unicorn'
 

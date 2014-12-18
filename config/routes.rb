@@ -2,13 +2,12 @@ Rails.application.routes.draw do
 
   post 'admin/parse'
 
-  resources :messages do 
-    member do
-      get 'service'
-    end
-  end
+  resources :messages 
+
   
   resources :weixin, only: [:index,:create]
+  
+  resources :account, only:[:index,:show,:update,:edit,:destroy]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

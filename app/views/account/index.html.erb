@@ -1,0 +1,27 @@
+<h1>Listing messages</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>name</th>
+      <th>appid</th>
+      <th>appsecret</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @public_accounts.each do |account| %>
+      <tr>
+		  
+		<td><%= account.name%></td>
+		<td><%= account.app_id%></td>
+		<td><%= account.app_secret%></td>
+        <td><%= link_to 'Show', account_path(account) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
