@@ -6,6 +6,8 @@
       <th>name</th>
       <th>appid</th>
       <th>appsecret</th>
+	  <th>official_name</th>
+	  <th>access_token</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -17,7 +19,10 @@
 		<td><%= account.name%></td>
 		<td><%= account.app_id%></td>
 		<td><%= account.app_secret%></td>
+		<td><%= account.official_name %></td>
+		<td><%= account.access_token%></td>
         <td><%= link_to 'Show', account_path(account) %></td>
+		<td><%= link_to 'Update', edit_account_path(account) %></td>
       </tr>
     <% end %>
   </tbody>

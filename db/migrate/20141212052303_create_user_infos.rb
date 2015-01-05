@@ -12,7 +12,7 @@ class CreateUserInfos < ActiveRecord::Migration
       t.text :headimgurl
       t.integer :subscribe_time
       t.string :unionid
-      t.integer :public_account
+      t.integer :public_account_id
       
       t.timestamps
     end

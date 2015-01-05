@@ -1,0 +1,4 @@
+Spree.fetch_cart();
+$("[data-hook='outside_cart_form']").remove();
+$("#empty-cart").remove();
+$('<%= escape_javascript(render :partial => "empty_cart") %>').insertAfter("[data-hook='cart_container']");

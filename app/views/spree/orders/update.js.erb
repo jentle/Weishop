@@ -1,0 +1,3 @@
+Spree.fetch_cart();
+$("[data-hook='outside_cart_form']").children().remove();
+$("[data-hook='outside_cart_form']").append('<%= escape_javascript(render :partial => "update_cart") %>');

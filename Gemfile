@@ -36,7 +36,7 @@ gem 'actionpack-xml_parser'
 # gem 'bcrypt', '~> 3.1.7'
 gem 'rspec', '3.1.0'
 
-# Running Background Jobs
+# Running Background Jobsd
 gem "resque", "~> 2.0.0.pre.1", github: "resque/resque"
 # Use unicorn as the app server
 # gem 'unicorn'
@@ -47,3 +47,12 @@ gem "resque", "~> 2.0.0.pre.1", github: "resque/resque"
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+
+gem 'spree', '2.4.2'
+gem 'spree_gateway', github: 'spree/spree_gateway', branch: '2-4-stable'
+gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '2-4-stable'
+# Use Spree_fancy to Suit Both Mobile Devices and Computers 
+gem 'spree_fancy', :git => 'git://github.com/spree/spree_fancy.git', :branch => '2-4-stable'
+# Use Spree I18N Translation
+gem 'spree_i18n', github: 'spree/spree_i18n', branch: '2-4-stable'
+gem 'spree_add_to_cart_ajax', github: 'nathandao/spree_add_to_cart_ajax', branch: '2-4-stable'
